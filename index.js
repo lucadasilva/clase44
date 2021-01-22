@@ -8,14 +8,17 @@ const rateLimit = require("express-rate-limit");
 const { send } = require("process");
 
 const limit = rateLimit({
-  windowMs: 1000 * 60,
+  windowMs: 1000 * 60 * 60,
   max: 5,
 });
 
 class User {
-  constructor(username, password) {
-    this.username = username;
+  constructor(email, password, nombre, apellido, edad) {
+    this.email = email;
     this.password = password;
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.edad = edad;
   }
 }
 
@@ -33,21 +36,24 @@ app.get("/index", function (req, res) {
 
 app.post("/signup", function (req, res) {
   let newUser = new User();
-  newUser.username = req.body.username;
+  newUser.email = req.body.email;
   newUser.password = req.body.password;
+  newUser.nombre = req.body.nombre;
+  newUser.apellido = req.body.apellido;
+  newUser.edad = req.body.edad;
 
   registros.push(newUser);
-
+  console.log(registros);
   res.send("registration accomplished");
 });
 
 app.post("/login", function (req, res) {
   let newAttempt = {
-    username: req.body.username,
+    email: req.body.email,
     password: req.body.password,
   };
   let indice = registros.findIndex(
-    (element) => element.username == newAttempt.username
+    (element) => element.email == newAttempt.email
   );
   if (indice != -1) {
     if (registros[indice].password == newAttempt.password) {

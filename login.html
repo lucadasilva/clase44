@@ -3,14 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="login.js" defer></script>
     <title>login</title>
 </head>
 <body>
-    <label for="usuario">usuario: </label><br>
-    <input type="text" name="usuario" id=""><br>
+    <label for="email">mail: </label><br>
+    <input type="email" name="email" id="email"><br>
     <label for="password">contraseña: </label><br>
-    <input type="password" name="contraseña" id=""><br><br>
-    <input type="button" value="Ingresar">
-    <input type="button" value="Registrarse">
+    <input type="password" name="contraseña" id="password"><br><br>
+    <button type="reset">Limpiar</button><button id="submit" type="submit">Ingresar</button><br><br>
+    <a href="register.html"><input type="button" value="Registrarse"></a>
 </body>
 </html>
