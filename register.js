@@ -26,6 +26,6 @@ let edad = document.getElementById("edad")
 let boton = document.getElementById("btn-reg")
 
 boton.addEventListener("click", ()=>{
+    console.log(email.value);
     postUsuario(email.textContent, password.textContent, nombre.textContent, apellido.textContent, edad.textContent);
-
 });

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="register.js" defer></script>
     <title>registrate</title>
 </head>
 <body>
@@ -12,11 +11,12 @@
     <label for="apellido">apellido: </label><br>
     <input type="text" name="apellido" id="apellido"><br>
     <label for="email">mail: </label><br>
-    <input type="email" name="email" id="email"><br>
+    <input type="email" id="email"><br>
     <label for="edad">edad: </label><br>
     <input type="number" name="edad" id="edad"><br>
     <label for="password">contraseña: </label><br>
     <input type="password" name="password" id="password"><br>
-    <button type="reset">Limpiar</button><button id="btn-reg" type="submit">Registrarse</button>
+    <button type="reset">Limpiar</button><button type="button" id="btn-reg">register</button>
+    <script src="register.js"></script>
 </body>
 </html>

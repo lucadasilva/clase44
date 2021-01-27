@@ -12,17 +12,26 @@ async function postLogin (email, password) {
         }),
     })
     console.log(request);
+    localStorage.setItem("token", request);
+
     return request
 }
 
 
 
 
-let email = document.querySelector("#email")
-let password = document.getElementById("password")
-let submit = document.getElementById("submit")
+var email = document.querySelector("#email")
+var password = document.getElementById("password")
+var submit = document.getElementById("submit")
 submit.addEventListener("click", ()=> {
-    postLogin(email.textContent, password.textContent)
+    
+    console.log(email.value + password.value);
+    postLogin(email.value, password.value).then(guardarKey);
+    
    //window.location.href = "http://google.com"
    
 } )
+
+function guardarKey(key){
+    localStorage.setItem("token", key);
+}

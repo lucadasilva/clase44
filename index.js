@@ -1,5 +1,6 @@
 const express = require("express");
-
+const jwt = require("jsonwebtoken");
+const expressJwt = require("express-jwt");
 const app = express();
 
 app.use(express.json());
@@ -9,16 +10,17 @@ const { send } = require("process");
 
 const limit = rateLimit({
   windowMs: 1000 * 60 * 60,
-  max: 5,
+  max: 5000,
 });
 
 class User {
-  constructor(email, password, nombre, apellido, edad) {
+  constructor(email, password, nombre, apellido, edad, admin) {
     this.email = email;
     this.password = password;
     this.nombre = nombre;
     this.apellido = apellido;
     this.edad = edad;
+    this.admin = admin;
   }
 }
 
@@ -41,6 +43,7 @@ app.post("/signup", function (req, res) {
   newUser.nombre = req.body.nombre;
   newUser.apellido = req.body.apellido;
   newUser.edad = req.body.edad;
+  newUser.admin = req.body.admin;
 
   registros.push(newUser);
   console.log(registros);
@@ -57,9 +60,14 @@ app.post("/login", function (req, res) {
   );
   if (indice != -1) {
     if (registros[indice].password == newAttempt.password) {
-      res.send("bien ahi");
+      var token = jwt.sign({usuario: req.body.email, admin: req.body.admin}, clave, {expiresIn: '5m'})
+
+      res.send(token);
     } else {
-      res.send("mal ahi");
+      res.status(401).send("usuario incorrecto");
     }
   }
 });
+
+
+var clave = "clave_random"
