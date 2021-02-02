@@ -1,5 +1,5 @@
 async function postUsuario (email, password, nombre, apellido, edad) {
-    let request = await fetch("http://localhost:3000/signup", {
+    let request = await fetch("http://localhost:3000/register", {
         method: "POST",
         headers: new Headers({
             "Content-Type": "application/json",
@@ -13,7 +13,6 @@ async function postUsuario (email, password, nombre, apellido, edad) {
             edad: `${edad}`,
         }),
     })
-    console.log(request);
     return request
 }
 let email = document.getElementById("email")
@@ -26,6 +25,6 @@ let edad = document.getElementById("edad")
 let boton = document.getElementById("btn-reg")
 
 boton.addEventListener("click", ()=>{
-    console.log(email.value);
+    console.log(email.value + " " + password.value);
     postUsuario(email.textContent, password.textContent, nombre.textContent, apellido.textContent, edad.textContent);
 });

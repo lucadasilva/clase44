@@ -2,7 +2,9 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
 const app = express();
+const cors = require('cors');
 
+app.use(cors());
 app.use(express.json());
 
 const rateLimit = require("express-rate-limit");
@@ -36,7 +38,7 @@ app.get("/index", function (req, res) {
   res.status(200).send("ok");
 });
 
-app.post("/signup", function (req, res) {
+app.post("/register", function (req, res) {
   let newUser = new User();
   newUser.email = req.body.email;
   newUser.password = req.body.password;
@@ -46,7 +48,6 @@ app.post("/signup", function (req, res) {
   newUser.admin = req.body.admin;
 
   registros.push(newUser);
-  console.log(registros);
   res.send("registration accomplished");
 });
 
@@ -68,6 +69,5 @@ app.post("/login", function (req, res) {
     }
   }
 });
-
 
 var clave = "clave_random"

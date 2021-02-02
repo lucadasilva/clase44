@@ -11,7 +11,6 @@ async function postLogin (email, password) {
             password: `${password}`,
         }),
     })
-    console.log(request);
     localStorage.setItem("token", request);
 
     return request
@@ -25,7 +24,7 @@ var password = document.getElementById("password")
 var submit = document.getElementById("submit")
 submit.addEventListener("click", ()=> {
     
-    console.log(email.value + password.value);
+    console.log(email.value + " " + password.value);
     postLogin(email.value, password.value).then(guardarKey);
     
    //window.location.href = "http://google.com"
