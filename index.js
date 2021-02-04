@@ -2,8 +2,8 @@ const express = require("express");
 const jwt = require("jsonwebtoken");
 const expressJwt = require("express-jwt");
 const app = express();
-const cors = require('cors');
-const user = require('./user.js');
+const cors = require("cors");
+const user = require("./user.js");
 
 app.use(cors());
 app.use(express.json());
@@ -15,7 +15,6 @@ const limit = rateLimit({
   windowMs: 1000 * 60 * 60,
   max: 5000,
 });
-
 
 // class User {
 //   constructor(email, password, nombre, apellido, edad, admin) {
@@ -40,15 +39,15 @@ app.get("/index", function (req, res) {
   res.status(200).send("ok");
 });
 
-
 app.post("/register", function (req, res) {
   let newUser = new user({
     email: req.body.email,
     password: req.body.password,
+    admin: req.body.admin,
   });
-  newUser.save().then(function(respuesta){
+  newUser.save().then(function (respuesta) {
     res.json(respuesta);
-    res.send("registration accomplished");
+    // res.send("registration accomplished");
   });
 });
 
@@ -57,12 +56,28 @@ app.post("/login", function (req, res) {
     email: req.body.email,
     password: req.body.password,
   };
-  user.findOne({ mail: newAttempt.email}).then(function(respuesta){
-    if(respuesta.password==newAttempt.password){
-      var token = jwt.sign({usuario: req.body.email, admin: req.body.admin}, clave, {expiresIn: '5m'})
-      res.json(token)
-    }
+  console.log(newAttempt);
+
+  user.find().then(function (respuesta) {
+    console.log(respuesta);
+    respuesta.forEach((user) => {
+      if (user.email == newAttempt.email) {
+        var token = jwt.sign(
+          { usuario: user.email, admin: user.admin },
+          clave,
+          { expiresIn: "5m" }
+        );
+        res.json(token);
+      }
+    });
   });
 });
 
-var clave = "clave_random"
+app.post("/verify", function (req, res) {
+  var token = jwt.verify(req.body.token, clave);
+  if ((token = true)) {
+    res.send("yes");
+  }
+});
+
+var clave = "clave_random";
